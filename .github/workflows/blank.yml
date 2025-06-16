@@ -16,13 +16,16 @@ jobs:
       - name: Run inline Python script
         shell: python
         run: |
-          import sys
-          from datetime import datetime
+          from datetime import datetime, UTC
 
-          def greet(name):
-              print(f"Hello, {name}! The time is {datetime.utcnow()}")
+          users = [
+              {"name": "alice", "active": True},
+              {"name": "bob", "active": False},
+              {"name": "carol", "active": True},
+          ]
 
-          if __name__ == "__main__":
-              name = "GitHub Actions"
-              greet(name)
-              sys.exit(0)
+          active_users = [u["name"].title() for u in users if u["active"]]
+          now = datetime.now(UTC).isoformat()
+
+          print(f"Active users ({len(active_users)}): {', '.join(active_users)}")
+          print(f"Time: {now}")
