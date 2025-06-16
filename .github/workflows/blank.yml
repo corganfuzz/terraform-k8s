@@ -1,0 +1,27 @@
+name: Test Inline Python
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run inline Python script
+        shell: python
+        run: |
+          import sys
+          from datetime import datetime
+
+          def greet(name):
+              print(f"Hello, {name}! The time is {datetime.utcnow()}")
+
+          if __name__ == "__main__":
+              name = "GitHub Actions"
+              greet(name)
+              sys.exit(0)
